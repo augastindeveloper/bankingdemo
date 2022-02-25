@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+ 
+ <form th:action="@{/deposit/success}" method="post"
+			style="max-width: 600px; margin: 0 auto;" th:object="${accountDetails}">
+
+			<div class="m-3">
+				<div class="form-group row">
+					<label class="col-form-lable col-4">Amount</label>
+					<div class="col-8">
+						<input type="number" class="form-control" th:field="*{amount}"
+							required />
+					</div>
+				</div>
+
+								
+
+				<div>
+					<button type="submit" class="btn btn-primary">Deposit</button>
+				</div>
+
+			</div>
+
+		</form>
+
+ 
+</body>
+</html>
