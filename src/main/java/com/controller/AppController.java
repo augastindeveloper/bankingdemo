@@ -15,51 +15,52 @@ import com.entity.CustomUserDetails;
 import com.entity.UserInfo;
 import com.repository.AccountDetailsRepository;
 import com.repository.UserRepository;
+import com.service.CustomUserDetailsService;
 
 @Controller
 public class AppController {
 	@Autowired
-	private UserRepository repo;
-	@Autowired
 	private BCryptPasswordEncoder bcrypt;
 	@Autowired
-	private AccountDetailsRepository accountDetailsRepository;
-	
-	
+	private CustomUserDetailsService customUserDetailsService;
+
 	@GetMapping("")
 	public String viewHomePage() {
 		return "index";
-		
+
 	}
-	
+
 	@GetMapping("/register")
 	public String showSignUpForm(Model model) {
 		model.addAttribute("userinfo", new UserInfo());
 		return "signup_form";
 	}
-	
+
 	@PostMapping("/process_register")
 	public String processRegistration(UserInfo userinfo) {
-		AccountDetails accountDetails = new AccountDetails();
+		// AccountDetails accountDetails = new AccountDetails();
 		userinfo.setPassword(bcrypt.encode(userinfo.getPassword()));
-		accountDetails.setAmount((long) 350000);
-		accountDetails.setUserinfo(userinfo);
-	//	repo.save(userinfo);
-		accountDetailsRepository.save(accountDetails);
+		// accountDetails.setAmount((long) 350000);
+		// accountDetails.setUserinfo(userinfo);
+		// repo.save(userinfo);
+		// accountDetailsRepository.save(accountDetails);
+
+		customUserDetailsService.addUser(userinfo);
 		return "register_success";
-		
+
 	}
-	
+
 	@GetMapping("/welcome")
 	public ModelAndView welcome(Model model) {
-	//	model.addAttribute("user","augustin");
+		// model.addAttribute("user","augustin");
 		ModelAndView modelview = new ModelAndView("welcome");
-	//	Authentication auth=SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails userinfo = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String name=userinfo.getFirstName();
-		
-		modelview.addObject("user",name);
-	//	modelview.addObject("accountnumber",userinfo.getAccountNumber());
+		// Authentication auth=SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails userinfo = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		String name = userinfo.getFirstName();
+
+		modelview.addObject("user", name);
+		// modelview.addObject("accountnumber",userinfo.getAccountNumber());
 		return modelview;
 	}
 

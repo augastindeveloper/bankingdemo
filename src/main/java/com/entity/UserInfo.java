@@ -20,8 +20,8 @@ public class UserInfo {
 	@GenericGenerator(name = "custom_user_id", strategy = "com.service.CustomUserIdGenerator")
 	@GeneratedValue(generator = "custom_user_id")
 	private Long id;
-	@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "userinfo")
-	@JoinColumn(name="account_number")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userinfo")
+	@JoinColumn(name = "account_number")
 	private AccountDetails accountdetails;
 
 	public AccountDetails getAccountdetails() {
@@ -32,8 +32,6 @@ public class UserInfo {
 		this.accountdetails = accountdetails;
 	}
 
-	
-
 	public Long getId() {
 		return id;
 	}
@@ -41,8 +39,6 @@ public class UserInfo {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
 
 	@Column(nullable = false, length = 20)
 	private String firstName;
